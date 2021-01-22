@@ -10,7 +10,7 @@ const getModifiedStyles = (initial, modified) => {
   const initialRules = initial.split(';');
   const modifiedRules = modified.split(';');
 
-  return initialRules.reduce((res, currRule, idx) => (currRule === modifiedRules[idx] ? res : [...res, currRule]), []).join(';');
+  return modifiedRules.reduce((res, currRule, idx) => (currRule === initialRules[idx] ? res : [...res, currRule]), []).join(';');
 };
 
 document.addEventListener('DOMContentLoaded', () => {
