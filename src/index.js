@@ -24,8 +24,10 @@ const sanitizeText = (text) => text
 document.addEventListener('DOMContentLoaded', () => {
   const createStyledHeader = (elementType) => {
     const selectionRange = getSelectionRange();
+
     const newHeader = createElement(elementType);
-    selectionRange.surroundContents(newHeader);
+    newHeader.appendChild(selectionRange.extractContents());
+    selectionRange.insertNode(newHeader);
 
     const defaultStyle = getStyle(newHeader).cssText;
     newHeader.className = `${elementType}-text`;
