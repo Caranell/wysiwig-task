@@ -1,9 +1,10 @@
 const headerButtons = ['h1', 'h2'];
 const textStyleButtons = ['bold', 'italic'];
 
+const getHTMLBody = (html) => new DOMParser().parseFromString(html, 'text/html').querySelector('body');
 const getElement = (name) => document.getElementsByClassName(name)[0];
-const getSelectionRange = () => window.getSelection().getRangeAt(0);
 const createElement = (tag) => document.createElement(tag);
+const getSelectionRange = () => window.getSelection().getRangeAt(0);
 const getStyle = (element) => window.getComputedStyle(element);
 
 const getModifiedStyles = (initial, modified) => {
@@ -40,12 +41,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('paste', (e) => {
     e.preventDefault();
 
-    const htmlText = e.clipboardData.getData('text/html');
-    if (!htmlText) {
+    const html = e.clipboardData.getData('text/html');
+    if (!html) {
       const text = sanitizeText(e.clipboardData.getData('text/plain'));
       document.execCommand('insertHTML', false, text);
     } else {
-
+      const body = getHTMLBody(html);
+      document.execCommand('insertHTML', false, body.innerHTML);
     }
   });
 
